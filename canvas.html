@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+
+</head>
+<body>
+<canvas id="canvas"  width="500" height="500"></canvas>
+<script type="text/javascript">
+  var boxSize = {'height': 40, 'width': 40};
+  var colorList = [];
+  var yOffset = 10;
+  var j = 1;
+  var columns = 10;
+  var rows = 50;
+
+  colorList.push({'color': 'turquoise', 'value':     '#1abc9c'});
+  colorList.push({'color': 'green-sea', 'value':     '#16a085'});
+  colorList.push({'color': 'emerland', 'value':      '#2ecc71'});
+  colorList.push({'color': 'nephritis', 'value':     '#27ae60'});
+  colorList.push({'color': 'peter-river', 'value':   '#3498db'});
+  colorList.push({'color': 'belize-hole', 'value':   '#2980b9'});
+  colorList.push({'color': 'amethyst', 'value':      '#9b59b6'});
+  colorList.push({'color': 'wisteria', 'value':      '#8e44ad'});
+  colorList.push({'color': 'wet-asphalt', 'value':   '#34495e'});
+  colorList.push({'color': 'midnight-blue', 'value': '#2c3e50'});
+  colorList.push({'color': 'sun-flower', 'value':    '#f1c40f'});
+  colorList.push({'color': 'orange', 'value':        '#f39c12'});
+  colorList.push({'color': 'carrot', 'value':        '#e67e22'});
+  colorList.push({'color': 'pumpkin', 'value':       '#d35400'});
+  colorList.push({'color': 'alizarin', 'value':      '#e74c3c'});
+  colorList.push({'color': 'pomegranate', 'value':   '#c0392b'});
+  colorList.push({'color': 'clouds', 'value':        '#ecf0f1'});
+  colorList.push({'color': 'silver', 'value':        '#bdc3c7'});
+  colorList.push({'color': 'concrete', 'value':      '#95a5a6'});
+  colorList.push({'color': 'asbestos', 'value':      '#7f8c8d'});
+
+  window.requestAnimFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function( callback ){ window.setTimeout(callback, 1000 / 60); };
+
+
+  // usage:
+  // instead of setInterval(render, 16) ....
+
+  (function animloop(){
+    requestAnimFrame(animloop);
+    draw2();
+  })();
+
+  function draw2(x, y, color, delay) {
+    var ctx = document.getElementById('canvas').getContext('2d');
+    ctx.fillStyle = color;
+    ctx.fillRect (x, y, boxSize['height'], boxSize['width']);
+  }
+
+  // canvas implementation
+  function draw(x, y, color, delay) {
+    var ctx = document.getElementById('canvas').getContext('2d');
+    ctx.fillStyle = color;
+    ctx.fillRect (x, y, boxSize['height'], boxSize['width']);
+  }
+
+  function shuffle(array) {
+    var m = array.length, t, i;
+    while (m) {
+      i = Math.floor(Math.random() * m--);
+      t = array[m];
+      array[m] = array[i];
+      array[i] = t;
+    }
+    return array;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // for (var i = 0; i < rows; i++) {
+    //   shuffle(colorList);
+    //   for (var j = 0; j < columns; j++) {
+    //     draw(j*boxSize['width'], i*boxSize['height'], colorList[j]['value'], j*500);
+    //   };
+    // };
+    for (var i = 0; i < rows; i++) {
+      shuffle(colorList);
+      for (var j = 0; j < columns; j++) {
+        draw(j*boxSize['width'], i*boxSize['height'], colorList[j]['value'], j*500);
+      };
+    };
+   });
+
+</script>
+</body>
+</html>
