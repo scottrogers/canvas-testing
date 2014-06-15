@@ -5,14 +5,15 @@
 
 </head>
 <body>
-<canvas id="canvas"  width="500" height="500"></canvas>
+<canvas id="canvas"  width="1000" height="1000"></canvas>
 <script type="text/javascript">
   var boxSize = {'height': 40, 'width': 40};
   var colorList = [];
   var yOffset = 10;
   var j = 1;
-  var columns = 10;
+  var columns = 20;
   var rows = 50;
+  var fps = 5;
 
   colorList.push({'color': 'turquoise', 'value':     '#1abc9c'});
   colorList.push({'color': 'green-sea', 'value':     '#16a085'});
@@ -37,23 +38,24 @@
 
   window.requestAnimFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function( callback ){ window.setTimeout(callback, 1000 / 60); };
 
+  (function animloop(time){
+    setTimeout(function() {
 
-  // usage:
-  // instead of setInterval(render, 16) ....
-
-  (function animloop(){
-    requestAnimFrame(animloop);
-    draw2();
+      requestAnimFrame(animloop);
+      flickerColoring(time);
+    }, 1000 / fps);
   })();
 
-  function draw2(x, y, color, delay) {
-    var ctx = document.getElementById('canvas').getContext('2d');
-    ctx.fillStyle = color;
-    ctx.fillRect (x, y, boxSize['height'], boxSize['width']);
+  function flickerColoring() {
+    for (var i = 0; i < rows; i++) {
+      shuffle(colorList);
+      for (var j = 0; j < columns; j++) {
+        draw(j*boxSize['width'], i*boxSize['height'], colorList[j]['value']);
+      };
+    };
   }
 
-  // canvas implementation
-  function draw(x, y, color, delay) {
+  function draw(x, y, color) {
     var ctx = document.getElementById('canvas').getContext('2d');
     ctx.fillStyle = color;
     ctx.fillRect (x, y, boxSize['height'], boxSize['width']);
@@ -71,18 +73,14 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
+
     // for (var i = 0; i < rows; i++) {
     //   shuffle(colorList);
     //   for (var j = 0; j < columns; j++) {
     //     draw(j*boxSize['width'], i*boxSize['height'], colorList[j]['value'], j*500);
     //   };
     // };
-    for (var i = 0; i < rows; i++) {
-      shuffle(colorList);
-      for (var j = 0; j < columns; j++) {
-        draw(j*boxSize['width'], i*boxSize['height'], colorList[j]['value'], j*500);
-      };
-    };
+
    });
 
 </script>
